@@ -1,4 +1,4 @@
-#Etch-A-Sketch
-##The Odin Project
+# Etch-A-Sketch 
+## The Odin Project
 
-Project 3 
+### Project 3 

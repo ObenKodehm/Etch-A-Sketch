@@ -4,7 +4,6 @@ const chooseColorBtn = document.querySelector('button[name="Color"]');
 const colorChoice = document.querySelector('.color-choices');
 const black = document.querySelector('button[name="Black"]');
 const randomize = document.querySelector('button[name="Randomize"]');
-// const chaos = document.querySelector('button[name="Chaos"]');              To Be Continued
 const colorPick = document.querySelector('input[name="color-picker"]');
 const clear = document.querySelector('button[name = "Clear"]');
 const colorHex = document.querySelector('p');
@@ -59,18 +58,14 @@ function setColorBlack() {
 }
 
 function randomColor() {
-  let r = Math.floor(Math.random()*254);
-  let g = Math.floor(Math.random()*254);
-  let b = Math.floor(Math.random()*254);
+  let r = Math.floor(Math.random()*255);
+  let g = Math.floor(Math.random()*255);
+  let b = Math.floor(Math.random()*255);
 
   color = `rgb(${r},${g},${b})`;
   colorHex.textContent = color;
-  sketch(n, color)
+  sketch(n, color);
 }
-
-// function chaosColor() {              To Be Continued
-//                                      To Be Continued
-// }                                    To Be Continued
 
 colorPick.addEventListener('input', () => {
   color = colorPick.value;
@@ -90,4 +85,40 @@ function openTab() {
 chooseColorBtn.addEventListener('click', openTab);
 randomize.addEventListener('click', randomColor);
 black.addEventListener('click', setColorBlack);
-// chaos.addEventListener('click', chaosColor);     To Be Continued
+
+
+// Probably one of the worst ways to do it but it works
+const chaos = document.querySelector('button[name="Chaos"]');
+chaos.addEventListener('click', chaotic);
+function randomnation(e) {
+  let r = Math.floor(Math.random()*255);
+  let g = Math.floor(Math.random()*255);
+  let b = Math.floor(Math.random()*255);
+
+  e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
+  e.target.style.border = "none";
+}
+
+function chaotic() {
+  sketchChaotic(n);
+  colorHex.textContent = "Just a Chaos.";
+}
+
+function sketchChaotic(n) {
+  while (container.firstChild) {
+    container.removeChild(container.lastChild);
+  }
+  setGrid(n);
+  for (let i = 0; i < n*n; i++) {
+    const div = document.createElement('div');
+    div.style.border = "1px solid #BFBFBF";
+    div.style.height = "auto";
+    div.style.width = "auto";
+    container.appendChild(div);
+    div.addEventListener('mouseover', randomnation);
+    clear.addEventListener('click', () => {
+      div.style.backgroundColor = "#FCF6F5FF";
+      div.style.border = "1px solid #BFBFBF";
+    });
+  }
+}
