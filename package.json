@@ -1,0 +1,15 @@
+{
+  "name": "etch-a-sketch-v1",
+  "version": "1.0.0",
+  "description": "Try it out [here](https://obenkodehm.github.io/Etch-A-Sketch-V1/).",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

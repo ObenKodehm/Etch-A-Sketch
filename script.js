@@ -1,7 +1,7 @@
-const container = document.querySelector('.container');
+const container = document.getElementById('sketch-grid');
 const size = document.querySelector('button[name="Size"]');
 const chooseColorBtn = document.querySelector('button[name="Color"]');
-const colorChoice = document.querySelector('.color-choices');
+const colorChoice = document.getElementById('color-choice');
 const black = document.querySelector('button[name="Black"]');
 const randomize = document.querySelector('button[name="Randomize"]');
 const colorPick = document.querySelector('input[name="color-picker"]');
@@ -20,17 +20,15 @@ function sketch(n, color) {
   setGrid(n);
   for (let i = 0; i < n*n; i++) {
     const div = document.createElement('div');
-    div.style.border = "1px solid #BFBFBF";
-    div.style.height = "auto";
-    div.style.width = "auto";
+    div.classList += (" border border-solid border-[#BFBFBF] w-auto h-auto");
     container.appendChild(div);
     div.addEventListener('mouseover', () => {
+      div.classList.toggle("border", false);
       div.style.backgroundColor = color;
-      div.style.border = "none";
     });
     clear.addEventListener('click', () => {
+      div.classList.toggle("border", true);
       div.style.backgroundColor = "#FCF6F5FF";
-      div.style.border = "1px solid #BFBFBF";
     });
   }
 }
@@ -62,7 +60,7 @@ function randomColor() {
   let g = Math.floor(Math.random()*255);
   let b = Math.floor(Math.random()*255);
 
-  color = `rgb(${r},${g},${b})`;
+  color =  '#' + r.toString(16) + g.toString(16) + b.toString(16);
   colorHex.textContent = color;
   sketch(n, color);
 }
@@ -87,16 +85,16 @@ randomize.addEventListener('click', randomColor);
 black.addEventListener('click', setColorBlack);
 
 
-// Probably one of the worst ways to do it but it works
+// Chaotic Colors Sketch
 const chaos = document.querySelector('button[name="Chaos"]');
 chaos.addEventListener('click', chaotic);
-function randomnation(e) {
+
+function randomnation() {
   let r = Math.floor(Math.random()*255);
   let g = Math.floor(Math.random()*255);
   let b = Math.floor(Math.random()*255);
 
-  e.target.style.backgroundColor = `rgb(${r},${g},${b})`;
-  e.target.style.border = "none";
+  return `rgb(${r},${g},${b})`;
 }
 
 function chaotic() {
@@ -111,14 +109,15 @@ function sketchChaotic(n) {
   setGrid(n);
   for (let i = 0; i < n*n; i++) {
     const div = document.createElement('div');
-    div.style.border = "1px solid #BFBFBF";
-    div.style.height = "auto";
-    div.style.width = "auto";
+    div.classList += (" border border-solid border-[#BFBFBF] w-auto h-auto");
     container.appendChild(div);
-    div.addEventListener('mouseover', randomnation);
+    div.addEventListener('mouseover', () => {
+      div.style.backgroundColor = randomnation();
+      div.classList.toggle("border", false);
+    });
     clear.addEventListener('click', () => {
+      div.classList.toggle("border", true);
       div.style.backgroundColor = "#FCF6F5FF";
-      div.style.border = "1px solid #BFBFBF";
     });
   }
 }

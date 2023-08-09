@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .button {
+    @apply w-full text-2xl py-[5px] border-[#FCF6F5FF] border-2 border-solid rounded-md text-[#FCF6F5FF] cursor-pointer duration-500 bg-[#2BAE66FF] hover:bg-[#FF5959];
+  }
+
+  .button-choice {
+    @apply button w-full text-[18px] rounded-none bg-[#FF5959] my-px font-serif hover:text-black;
+  }
+}
