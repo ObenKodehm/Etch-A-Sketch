@@ -15,24 +15,26 @@
       <div class="flex flex-col justify-around items-center w-[170px]">
 
         <h2 class="font-serif font-bold text-3xl text-[#FCF6F5FF] drop-shadow-[2px_2px_2px_black] underline decoration-[#FCF6F5FF]">Customize</h2>
-        <button type="button" name="Size" class="button font-serif">Grid Size</button>
-        <button type="button" name="Color" class="button font-serif">Choose Color</button>
+        <button type="button" name="Grid Size" class="button font-serif">Grid Size</button>
 
-        <div class="hidden flex-col items-center justify-between mt-[-35px] w-[164px] h-[200px] border-solid rounded-md border-x-2 border-b-2" id="color-choice">
-          <button type="button" name="Black" class="button-choice">Black</button>
-          <button type="button" name="Randomize" class="button-choice">Randomize</button>
-          <button type="button" name="Chaos" class="button-choice">Chaos</button> 
-          <label class="w-[160px] drop-shadow-[2px_2px_2px_black] text-[#FCF6F5FF] text-[20px] text-center" for="color-picker">Color Picker:</label>
-          <input type="color" name="color-picker" class="mb-1" id="color-picker">
+        <div class="w-full relative">
+          <button type="button" name="Choose Color" class="button font-serif">Choose Color</button>
+          <div class="hidden absolute flex-col items-center justify-between bg-[#2BAE66FF] w-full h-[200px] border-solid rounded-md border-x-2 border-b-2" id="color-choice">
+            <button type="button" name="Black" class="button-choice">Black</button>
+            <button type="button" name="Randomize" class="button-choice">Randomize</button>
+            <button type="button" name="Chaos" class="button-choice">Chaos</button>
+            <label class="w-[160px] drop-shadow-[2px_2px_2px_black] text-[#FCF6F5FF] text-[20px] text-center" for="color-picker">Color Picker:</label>
+            <input type="color" name="color-picker" class="mb-1" id="color-picker">
+          </div>
         </div>
 
         <button type="button" name="Clear" class="button font-serif">Clear</button>
       </div>
 
-      <div class="grid w-[500px] h-[500px] bg-[#FCF6F5FF] border-2 border-solid border-black" id="sketch-grid"></div>
+      <div class="grid w-[500px] h-[500px] bg-[#FCF6F5FF] border-2 border-solid border-black" id="sketch-container"></div>
 
     </main>
-  <p class="font-serif text-center text-3xl text-[#FCF6F5FF] pt-[10px]"></p>
+  <p class="font-serif text-center text-3xl text-[#FCF6F5FF] pt-[10px]" id="color"></p>
   </body>
   <script src="script.js"></script>
 </html>

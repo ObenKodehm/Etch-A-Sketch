@@ -626,6 +626,38 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.left-96 {
+  left: 24rem;
+}
+
+.bottom-60 {
+  bottom: 15rem;
+}
+
+.left-60 {
+  left: 15rem;
+}
+
+.left-72 {
+  left: 18rem;
+}
+
+.left-80 {
+  left: 20rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -662,6 +694,10 @@ video {
   height: auto;
 }
 
+.h-full {
+  height: 100%;
+}
+
 .w-\[160px\] {
   width: 160px;
 }
@@ -684,6 +720,74 @@ video {
 
 .w-auto {
   width: auto;
+}
+
+.w-full {
+  width: 100%;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-\[bounce_1s_ease-in-out_3\] {
+  animation: bounce 1s ease-in-out 3;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-\[bounce_0\.5s_ease-in-out_1\] {
+  animation: bounce 0.5s ease-in-out 1;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-\[bounce_1s_ease-out-in_1\] {
+  animation: bounce 1s ease-out-in 1;
 }
 
 .flex-col {
@@ -798,4 +902,10 @@ video {
 .drop-shadow-\[3px_3px_5px_black\] {
   --tw-drop-shadow: drop-shadow(3px 3px 5px black);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

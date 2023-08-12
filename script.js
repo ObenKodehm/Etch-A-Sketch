@@ -1,123 +1,126 @@
-const container = document.getElementById('sketch-grid');
-const size = document.querySelector('button[name="Size"]');
-const chooseColorBtn = document.querySelector('button[name="Color"]');
-const colorChoice = document.getElementById('color-choice');
-const black = document.querySelector('button[name="Black"]');
-const randomize = document.querySelector('button[name="Randomize"]');
-const colorPick = document.querySelector('input[name="color-picker"]');
-const clear = document.querySelector('button[name = "Clear"]');
-const colorHex = document.querySelector('p');
-let n = 16;
-let color = "#000";
+const sketch = (function sketchGrid() {
+  const sketchContainer = document.getElementById('sketch-container');
 
-window.addEventListener('load', sketch(n, color));
-
-//   MAIN SKETCH
-function sketch(n, color) {
-  while (container.firstChild) {
-    container.removeChild(container.lastChild);
+  function setGrid(n) {
+    sketchContainer.style.gridTemplateRows = `repeat(${n}, minmax(0, 1fr))`;
+    sketchContainer.style.gridTemplateColumns = `repeat(${n}, minmax(0, 1fr))`;
   }
-  setGrid(n);
-  for (let i = 0; i < n*n; i++) {
-    const div = document.createElement('div');
-    div.classList += (" border border-solid border-[#BFBFBF] w-auto h-auto");
-    container.appendChild(div);
-    div.addEventListener('mouseover', () => {
-      div.classList.toggle("border", false);
-      div.style.backgroundColor = color;
-    });
-    clear.addEventListener('click', () => {
-      div.classList.toggle("border", true);
-      div.style.backgroundColor = "#FCF6F5FF";
-    });
+
+  function clearGrid() {
+    const gridSize = sketchContainer.childElementCount;
+    const gridCollection = sketchContainer.children;
+    for (let i = 0; i < gridSize; i += 1) {
+      const gridElement = gridCollection.item(i);
+      gridElement.style.backgroundColor = '#FCF6F5FF';
+      gridElement.classList.toggle('border', true);
+    }
   }
-}
 
-// CHANGING SIZE
-size.addEventListener('click', setSize);
-function setSize() {
-  n = prompt("Enter a Grid Size.", 16);
-  if (n >= 1 && n <= 64) {
-    sketch(n, color);
-  } else {
-    confirm("Enter a Number between 1 and 64.");
+  function createDiv() {
+    const divElement = document.createElement('div');
+    divElement.classList = 'border border-solid border-[#BFBFBF] w-auto h-auto';
+    return divElement;
   }
-}
 
-function setGrid(a) {
-  container.style['grid-template-columns'] = `repeat(${a}, 1fr)`;
-  container.style['grid-template-rows'] = `repeat(${a}, 1fr)`;
-}
+  function createAndModifyGrid(n) {
+    const m = (n * n) - sketchContainer.childElementCount;
 
-// SETTING COLORS
-function setColorBlack() {
-  colorHex.textContent = "#000";
-  sketch(n, "#000");
-}
+    setGrid(n);
 
-function randomColor() {
-  let r = Math.floor(Math.random()*255);
-  let g = Math.floor(Math.random()*255);
-  let b = Math.floor(Math.random()*255);
+    if (m > 0) {
+      for (let i = 0; i < m; i += 1) {
+        const gridBlock = createDiv();
+        sketchContainer.appendChild(gridBlock);
+      }
+    } else {
+      for (let i = 0; i < Math.abs(m); i += 1) {
+        sketchContainer.removeChild(sketchContainer.lastElementChild);
+      }
+    }
+  }
 
-  color =  '#' + r.toString(16) + g.toString(16) + b.toString(16);
-  colorHex.textContent = color;
-  sketch(n, color);
-}
+  return { createAndModifyGrid, clearGrid };
+}());
 
-colorPick.addEventListener('input', () => {
-  color = colorPick.value;
-  colorHex.textContent = color;
-  sketch(n, color);
+(function setButtons() {
+  const sizeButton = document.querySelector('button[name="Grid Size"]');
+  sizeButton.addEventListener('click', () => {
+    const gridSize = prompt('Enter a grid size between 1 and 64: ');
+
+    if (Number.isNaN(gridSize) === NaN || gridSize < 1 || gridSize > 64) {
+      alert('Enter a valid grid size between 1 and 64.');
+    } else {
+      sketch.clearGrid();
+      sketch.createAndModifyGrid(Number(gridSize));
+    }
+  });
+
+  const colorChoiceButton = document.querySelector('button[name="Choose Color"]');
+  const colorChoices = document.getElementById('color-choice');
+  colorChoiceButton.addEventListener('click', () => {
+    colorChoices.classList.toggle('hidden');
+    colorChoices.classList.toggle('flex');
+  });
+
+  const clearButton = document.querySelector('button[name="Clear"]');
+  clearButton.addEventListener('click', () => {
+    sketch.clearGrid();
+  });
+}());
+
+let gridColor = () => '#000';
+const sketchContainer = document.getElementById('sketch-container');
+sketchContainer.addEventListener('mouseover', (event) => {
+  const gridElement = event.target;
+  if (gridElement.id !== 'sketch-container') {
+    gridElement.style.backgroundColor = gridColor();
+    gridElement.classList.toggle('border', false);
+  }
 });
 
-
-function openTab() {
-  if (colorChoice.style.display === "flex") {
-    colorChoice.style.display = "none";
-  }else {
-    colorChoice.style.display = "flex";
+(function setColorButtons() {
+  function showColorChoice(choice) {
+    const currentColorPara = document.getElementById('color');
+    currentColorPara.textContent = choice;
   }
-}
 
-chooseColorBtn.addEventListener('click', openTab);
-randomize.addEventListener('click', randomColor);
-black.addEventListener('click', setColorBlack);
+  const blackColorButton = document.querySelector('button[name="Black"]');
+  blackColorButton.addEventListener('click', () => {
+    gridColor = () => '#000';
+    sketch.clearGrid();
+    showColorChoice('Color: #000');
+  });
 
+  const getRandomColor = () => {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
 
-// Chaotic Colors Sketch
-const chaos = document.querySelector('button[name="Chaos"]');
-chaos.addEventListener('click', chaotic);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
 
-function randomnation() {
-  let r = Math.floor(Math.random()*255);
-  let g = Math.floor(Math.random()*255);
-  let b = Math.floor(Math.random()*255);
+  const randomizeColorButton = document.querySelector('button[name="Randomize"]');
+  randomizeColorButton.addEventListener('click', () => {
+    const randomColor = getRandomColor();
+    gridColor = () => randomColor;
+    sketch.clearGrid();
+    showColorChoice(`Color: ${randomColor}`);
+  });
 
-  return `rgb(${r},${g},${b})`;
-}
+  const chaosColorButton = document.querySelector('button[name="Chaos"]');
+  chaosColorButton.addEventListener('click', () => {
+    gridColor = () => getRandomColor();
+    sketch.clearGrid();
+    showColorChoice('Just A Chaos.');
+  });
 
-function chaotic() {
-  sketchChaotic(n);
-  colorHex.textContent = "Just a Chaos.";
-}
+  const colorPicker = document.getElementById('color-picker');
+  colorPicker.addEventListener('change', (event) => {
+    const colorPick = event.target.value;
+    gridColor = () => colorPick;
+    sketch.clearGrid();
+    showColorChoice(`Color: ${colorPick}`);
+  });
+}());
 
-function sketchChaotic(n) {
-  while (container.firstChild) {
-    container.removeChild(container.lastChild);
-  }
-  setGrid(n);
-  for (let i = 0; i < n*n; i++) {
-    const div = document.createElement('div');
-    div.classList += (" border border-solid border-[#BFBFBF] w-auto h-auto");
-    container.appendChild(div);
-    div.addEventListener('mouseover', () => {
-      div.style.backgroundColor = randomnation();
-      div.classList.toggle("border", false);
-    });
-    clear.addEventListener('click', () => {
-      div.classList.toggle("border", true);
-      div.style.backgroundColor = "#FCF6F5FF";
-    });
-  }
-}
+sketch.createAndModifyGrid(16);
